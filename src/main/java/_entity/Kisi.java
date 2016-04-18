@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Kisi.findByAd", query = "SELECT k FROM Kisi k WHERE k.ad = :ad"),
     @NamedQuery(name = "Kisi.findBySoyad", query = "SELECT k FROM Kisi k WHERE k.soyad = :soyad")})
 public class Kisi implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,7 +55,7 @@ public class Kisi implements Serializable {
     @Size(min = 1, max = 20)
     @Column(nullable = false, length = 20)
     private String soyad;
-    @OneToMany(mappedBy = "kisi",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "kisi", cascade = CascadeType.ALL)
     private List<Telefon> telefonList;
 
     public Kisi() {
@@ -69,16 +70,18 @@ public class Kisi implements Serializable {
         this.ad = ad;
         this.soyad = soyad;
     }
-    
+
+    //    Bu kısma eklenti yapıldı one-to-many ilişkisinden dolayı
     @PrePersist
-    public void prePersistMethod(){
+    public void prePersistMethod() {
         for (Telefon telefon : telefonList) {
             telefon.setKisi(this);
         }
     }
-    
+
+    //    Bu kısma eklenti yapıldı one-to-many ilişkisinden dolayı
     @PreUpdate
-    public void preUpdateMethod(){
+    public void preUpdateMethod() {
         for (Telefon telefon : telefonList) {
             telefon.setKisi(this);
         }
@@ -141,5 +144,5 @@ public class Kisi implements Serializable {
     public String toString() {
         return "_bean.Kisi[ id=" + id + " ]";
     }
-    
+
 }
