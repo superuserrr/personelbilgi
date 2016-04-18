@@ -21,8 +21,47 @@
             <version>6.0</version>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
+        
+        <!--
+            primefaces jar eklentisi otomatik olarak yapabilmesi için aşağıdaki
+            eklentiyi yazmamız gerekmektedir.
+        -->
+        <dependency>  
+            <groupId>org.primefaces</groupId>  
+            <artifactId>primefaces</artifactId>  
+            <version>5.3</version>  
+        </dependency>  
+        
+        <!--Primefaces THEME eklentisi yapıldı.-->
+        <dependency>  
+            <groupId>org.primefaces.themes</groupId>  
+            <artifactId>all-themes</artifactId>  
+            <version>1.0.10</version>  
+        </dependency> 
+        
+        <!--Mysql dependency eklentisi yapıldı-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+        </dependency>
 
+    </dependencies>
+    
+    <repositories> 
+        <!-- 
+        For 3.5 and older 
+        Aynı zamanda THEME' ler için de bu işlemi 
+        yapmış olduk.
+        -->  
+        <repository>  
+            <id>prime-repo</id>  
+            <name>PrimeFaces Maven Repository</name>  
+            <url>http://repository.primefaces.org</url>  
+            <layout>default</layout>  
+        </repository>
+    </repositories>
+    
     <build>
         <plugins>
             <plugin>
