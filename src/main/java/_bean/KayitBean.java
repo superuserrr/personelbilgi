@@ -38,7 +38,6 @@ public class KayitBean {
     
     public KayitBean() {
     }
-    
     public void ekle(){
         
         //one-to-many çift taraflı ikisindende set etmek gerekiyor.
@@ -49,10 +48,14 @@ public class KayitBean {
         //Eğer one-to-many çift taraflı ilişki varsa her iki tarafı
         //karşılıklı olarak setlemeliyiz 
         kisi.setTelefonList(telefonList);
-        cepTel.setKisi(kisi);
-        evTel.setKisi(kisi);
+        //cepTel.setKisi(kisi);
+        //evTel.setKisi(kisi);
         
         kisiService.ekle(kisi);
+        
+        kisi=new Kisi();
+        cepTel=new Telefon();
+        evTel=new Telefon();
         
     }
 
