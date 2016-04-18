@@ -12,14 +12,20 @@
     <h:body>
         <h:form>
             <p:panelGrid columns="2">
+                <f:facet name="header">
+                    <p:outputLabel value="Kayıt Bilgileri"/>
+                </f:facet>
                 <p:outputLabel value="Ad:"/>
-                <p:inputText value=""
+                <p:inputText value=""/>
                 <p:outputLabel value="Soyad:"/>
-                <p:inputText value=""
+                <p:inputText value=""/>
                 <p:outputLabel value="Cep Tel:"/>
-                <p:inputText value=""
+                <p:inputText value=""/>
                 <p:outputLabel value="Ev Tel:"/>
-                <p:inputText value=""
+                <p:inputText value=""/>
+                <f:facet name="footer">
+                    <p:outputLabel value="Button Eklenecektir."/>
+                </f:facet>
             </p:panelGrid>
         </h:form>
     </h:body>
