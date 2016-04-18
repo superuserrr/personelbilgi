@@ -3,22 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package _bean;
+package _entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,36 +30,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(catalog = "personelbilgi", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Telefon.findAll", query = "SELECT t FROM Telefon t"),
-    @NamedQuery(name = "Telefon.findById", query = "SELECT t FROM Telefon t WHERE t.id = :id"),
-    @NamedQuery(name = "Telefon.findByTelNo", query = "SELECT t FROM Telefon t WHERE t.telNo = :telNo")})
-public class Telefon implements Serializable {
+    @NamedQuery(name = "Kisi.findAll", query = "SELECT k FROM Kisi k"),
+    @NamedQuery(name = "Kisi.findById", query = "SELECT k FROM Kisi k WHERE k.id = :id"),
+    @NamedQuery(name = "Kisi.findByAd", query = "SELECT k FROM Kisi k WHERE k.ad = :ad"),
+    @NamedQuery(name = "Kisi.findBySoyad", query = "SELECT k FROM Kisi k WHERE k.soyad = :soyad")})
+public class Kisi implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
-    @Size(max = 30)
-    @Column(name = "tel_no", length = 30)
-    private String telNo;
-    @JoinColumn(name = "kisi_id", referencedColumnName = "id")
-    @ManyToOne
-    private Kisi kisi;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(nullable = false, length = 20)
+    private String ad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(nullable = false, length = 20)
+    private String soyad;
+    @OneToMany(mappedBy = "kisi")
+    private List<Telefon> telefonList;
 
-    public Kisi getKisi() {
-        return kisi;
+    public Kisi() {
     }
 
-    public void setKisi(Kisi kisi) {
-        this.kisi = kisi;
-    }
-
-    public Telefon() {
-    }
-
-    public Telefon(Integer id) {
+    public Kisi(Integer id) {
         this.id = id;
+    }
+
+    public Kisi(Integer id, String ad, String soyad) {
+        this.id = id;
+        this.ad = ad;
+        this.soyad = soyad;
     }
 
     public Integer getId() {
@@ -68,12 +75,29 @@ public class Telefon implements Serializable {
         this.id = id;
     }
 
-    public String getTelNo() {
-        return telNo;
+    public String getAd() {
+        return ad;
     }
 
-    public void setTelNo(String telNo) {
-        this.telNo = telNo;
+    public void setAd(String ad) {
+        this.ad = ad;
+    }
+
+    public String getSoyad() {
+        return soyad;
+    }
+
+    public void setSoyad(String soyad) {
+        this.soyad = soyad;
+    }
+
+    @XmlTransient
+    public List<Telefon> getTelefonList() {
+        return telefonList;
+    }
+
+    public void setTelefonList(List<Telefon> telefonList) {
+        this.telefonList = telefonList;
     }
 
     @Override
@@ -86,10 +110,10 @@ public class Telefon implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Telefon)) {
+        if (!(object instanceof Kisi)) {
             return false;
         }
-        Telefon other = (Telefon) object;
+        Kisi other = (Kisi) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -98,7 +122,7 @@ public class Telefon implements Serializable {
 
     @Override
     public String toString() {
-        return "_bean.Telefon[ id=" + id + " ]";
+        return "_bean.Kisi[ id=" + id + " ]";
     }
     
 }
