@@ -1,0 +1,152 @@
+﻿
+Personel Bilgi Proje Adımları
+
+ Kisi
+----------------
+id int(10)
+ad varchar(10)
+soyad varchar(10)
+
+Telefon
+----------------
+id int(10)
+tel_no varchar(30)
+kisi_id int(10)
+
+
+
+create database personelbilgi;
+
+create table KISI
+(
+	id int(10) auto_increment,
+	ad varchar(20) not null,
+	soyad varchar(20) not null
+	primary key(id)
+)
+
+create table TELEFON
+(
+	id int(10) auto_increment,
+	tel_no varchar(30),
+	kisi_id int(10)
+	primary key(id),
+	constraint FK_TEL_KISIID_KISI_ID foreign key(kisi_id) references kisi(id)
+)
+
+kayit.xhtml ---->kayitBena ----> KisiService ---->KisiFacade ---->Kisi
+   JSF		 Managed Bean	 Session Bean	  Session Bean 	  Entity Bean
+				  Stateless	  
+
+
+kullanici adi: superuserrr
+kullanici sifre: bm.superuserrr1
+email: bm.resulaydin@gmail.com
+Eger netbeanstan bir beri upload edeceksem kullanacagim uzanti bu olacaktir.
+https://github.com/superuserrr/personelbilgi.git
+
+
+Proje Adımları
+----------------
+1-) Github'da hesap aç
+2-) Maven web projesi yaratalım.
+3-) veritabanı tablolarını yaratalım.
+4-) package yapısını oluşturalım(entity, facade, bean, service)
+    	-Entity bean'ları yaratalım.(Proje Webserver görmediyse glassfish göster.)
+5-) Proje source'unda docs folder yarattık, içine db_script.txt olusturduk.
+    Veritabanı yaratma kodlarını bu dosyaya koyduk.
+6-) Git source kontrol sisteme projeyi koyalım.
+	- Yani projenin üzerine gel sağtık Versioning -> Initiliaze Git Repository...
+	  Böylece proje localda gösterdiğimiz adrese kayıt işlemini yapacak ve istenildi
+	  ği zaman buradan projeyi çekebileceğiz.
+7-) Proje Weblogic ile ilişkilendirilmiş mi bakalım ==> properties -> run
+8-) Entityler yaratıldı.
+9-) Projeyi git up ' a koy  ---> Proje sağ tıkla ---> Git ---> Remote --->push
+    --->yukarıdaki adresi url kısmına girdikten sonra kullanıcı adı ve sifre girisi yap
+	tıktan sonra git hub ' eklenti islemini gerçekleştirmiş olduk.
+10-) Telefon Class'ında Kisi kisiId olan kısmını Kisi kisi olarak değiştirelim
+     Kisi Class'ında da OneToMany(Mapped by('kisiId')) kısmındaki kisiId alanini kisi olarak düzeltelim.
+11-) Facade paketlerine session Beanları olustur.
+12-) AbstractFacade classında bulunan edit metodunun adını update olarak değiştirelim
+13-) Persistence.xml dosyasındaki ismi değiştirelim.
+	-Facadelarda da isim değişikliği yapmamaız lazım.
+14-) web.xml oluşturmak için eğer default olarak gelmediyse 
+	==> other->web->standart Diployment Description(web.xml) şeklinde oluşturabiliriz.
+15-) web.xml' e JSF ile ilgili bölümleri ekleyin
+
+16-)	<servlet-mapping>
+        	<servlet-name>Faces Servlet</servlet-name>
+	        <url-pattern>*.jsf</url-pattern>    
+	</servlet-mapping>
+     
+      a.  <url-pattern>*.jsf</url-pattern> alanındaki tanımlama ile birlikte bundan sonra
+	  bir sayfa çağrımı yapılacaksa uzantısının .jsf olarak yazılıp çağrılaması istene
+	  cektir.Güvenlik açısından iyidir kısmen
+17-) kayit.xhtml yarat(index' i de silelim.)
+      a.WebPages->new->other-> JSF Page->kayit olarak kaydet.
+      b.Sayfaya primefaces desteği ekle.(Eski projelerden primefaces decleration' ı al sayfanın başına ekle.)
+      c.Yaptığımız değişiklikleri görüp geri getirebilmek için 
+	-team->show changes->revert modification ile gerçekleştirebiliriz.
+18-) pom.xml' e primefaces,primefaces theme, mysql jdbc ekle.
+	-primefaces 4.0 ve sonrası sürümler için direkt olarak "Maven Central Repository" da alt yapıları
+	 mevcut yani  primefaces sayfasından download->Donwloading with Maven(sayfanın en altında)
+	 alanındaki <dependency> tagları arasındaki xml kodlarını alıp Netbeans' taki "pom.xml"
+	 alanındaki <dependencies> tagları arasına yazarsak direkt olarak indirilecekler(Dependency)
+	 klasörünün altında görünecektir.
+	-primefaces 4.0 öncesi sürümler için primefacesin pom.xml içerisinde kendi repository
+	 'sini oluşturması gerekmektedir. Yani pom.xml içerisine  <repositories> başlığı oluşturup
+	 altına primefaces sayfasından download->Donwloading with Maven(sayfanın en altında)
+	 alanındaki <repository> ile başlayıp biten kısmı eklememiz gerekmektedir.
+	-Not:primefaces' teki THEME' lar "Maven Central Repository" de bulunmamaktadır. O yüzden ikinci
+	 seçenekteki gibi işlem yapılması gerekmektedir.
+
+	- THEME' lar için google' a primefaces theme yazıp primefaces theme tıkla sayfanın en
+	 altında bütün temalar için Maven Dependencies başlığı altında <dependency> baslığı
+	 nı bitis kısmına kadar kopyalayıp pom.xml içerisindeki <dependencies> tagının içine
+	 yazalım.
+	
+	 - Mysql için google->mysql jdbc maven->maven <dependency> taglarını alıp pom.xml
+	 sayfasında <dependencies> tagları arasına yazılırsa primefaces 4.0 ve üstü için yaptı
+	 ğımız gibi kullanabilriz.
+	
+	- pom.xml dosyası açıkken üst menülerde Graph alanına tıklandığında varolan projede
+	 ki eklentileri görebileceğiz
+
+
+Brain Check In: 
+		1-) Primefaces 4.0 ve sonrası için primefaces sayfasından Download With Maven
+		altında bulunan <dependency> taglarını alıp IDE' deki pom.xml altındaki 
+		<dependencies> arasına yazarsam "Maven Central Repository" de bu sürümlerin
+		repositoryleri bulunduğundan dolayı IDE' de bulunan Dependencies klasörünü sağ tıkla
+		"Download Declared Dependencies" dersem otomatik olarak indirme olayını gerçekleştirecektir.
+		2-) Primefaces 4.0, öncesi ve primefaces THEME' lar için pom.xml altında hem repository oluş
+		turmak gerekmektedir hemde  <dependencies> tagaları arasına THEME' lar için 
+		primefaces THEME sayfasında bulunan Maven Dependencies 	altında bulunan 
+		<dependency> taglarını yapıştırmamız gerekmektedir.
+	
+		MAVEN KAZANCI: Farklı bir proje oluşturduğumuzda var olan projedeki jar
+		dosyalarının aynısını yeni projede kullanmak istersek yeni projeyi maven
+		projesi olarak oluşturup ve var olan projedeki pom.xml sayfasının içeriğini
+		yeni projeye eklediğimizde aynı jarları bizim için download edecektir.
+
+19-) kayit.xhtml sayfasını içini doldur. Ve projeyi çalıştıralım.
+20-) Primefaces THEME değişikliği yaptık web.xml sayfasına 
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>redmond</param-value>
+    </context-param> eklentisi yapıldı.
+21-) KayıtBean yaratıyoruz.
+22-) kayit.xhtml sayfa bindinglerini bean' a bağlayalım.
+23-) KisiService session beanini yarat ekle motodu koy
+24-) KisiBean ekle metodunu yazıyoruz.
+25-) Projeyi çalıştıralım.Veritabanından kontrol edelim
+
+
+
+
+
+
+
+
+
+
